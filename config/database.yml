@@ -82,4 +82,4 @@ production:
   <<: *default
   database: graphql-tutorial_production
   username: graphql-tutorial
-  password: <%= ENV['GRAPHQL-SAMPLE_DATABASE_PASSWORD'] %>
+  password: <%= ENV['GRAPHQL-TUTORIAL_DATABASE_PASSWORD'] %>
