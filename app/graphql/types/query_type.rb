@@ -3,6 +3,7 @@ Types::QueryType = GraphQL::ObjectType.define do
   description "The query root for this schema"
 
   field :movie do
+    description "the movie by id"
     type Types::MovieType
     argument :id, !types.ID
     resolve -> (obj, args, ctx) {
@@ -11,10 +12,24 @@ Types::QueryType = GraphQL::ObjectType.define do
   end
 
   field :actor do
+    description "the actor by id"
     type Types::ActorType
     argument :id, !types.ID
     resolve -> (obj, args, ctx) {
       Actor.find(args[:id])
+    }
+  end
+
+  field :movies do
+    description "show all movies"
+    type types[Types::MovieType]
+    argument :year, types.Int
+    resolve -> (obj, args, ctx) {
+      if args[:year].present?
+        Movie.where(year: args[:year])
+      else
+        Movie.all
+      end
     }
   end
 
